@@ -1,9 +1,9 @@
 #include<stdio.h>
 #include<math.h>
 
-#define MAX_SIZE 100 /* ¾ØÕó×î´óÎ¬Êı */
-#define bound pow(2, 127) /* ÅĞ¶Ïµş´ú·¢É¢µÄ±ß½çÖµ */
-#define ZERO 0.000000001 /* µ±Ò»¸öÕıÊıĞ¡ÓÚZERO¾ÍÈÏÎª¸ÃÊıÊÇ0 */
+#define MAX_SIZE 100 /* çŸ©é˜µæœ€å¤§ç»´æ•° */
+#define bound pow(2, 127) /* åˆ¤æ–­å ä»£å‘æ•£çš„è¾¹ç•Œå€¼ */
+#define ZERO 0.000000001 /* å½“ä¸€ä¸ªæ­£æ•°å°äºZEROå°±è®¤ä¸ºè¯¥æ•°æ˜¯0 */
 
 double norm(int n, double x[], double y[])
 {
@@ -18,7 +18,6 @@ double norm(int n, double x[], double y[])
 }
 void swap(int i,int j, int n, double a[][MAX_SIZE], double b[])
 {
-    printf("%d %d\n",i,j);
     double temp;
     for(int count=0;count<n;count++)
     {
@@ -35,11 +34,17 @@ void change(int n, double a[][MAX_SIZE], double b[])
     for(int i=0;i<n;i++)
     {
         double max = a[i][i];
+        int max_index = 0;
         for(int j=i+1;j<n;j++)
         {
             if(fabs(a[j][i])>fabs(max))
-                swap(i,j,n,a,b);
+            {
+                max = a[j][i];
+                max_index = j;
+            }
         }
+        if(max_index != 0)
+            swap(i,max_index,n,a,b);
     }
 }
 int convergence(int n, double x[])
@@ -104,7 +109,7 @@ int Jacobi( int n, double a[][MAX_SIZE], double b[], double x[], double TOL, int
 }
 int Gauss_Seidel ( int n, double a[][MAX_SIZE], double b[], double x[], double TOL, int MAXN )
 {
-    //ÔÚ½øĞĞÑÅ¿É±Èµü´úÊ±ÒÑ¾­½øĞĞ¹ıÑ¡È¡Ö÷Ôª
+    //åœ¨è¿›è¡Œé›…å¯æ¯”è¿­ä»£æ—¶å·²ç»è¿›è¡Œè¿‡é€‰å–ä¸»å…ƒ
     if(test(n, a)==0)
         return -1;
     double update_x[n];
@@ -142,7 +147,7 @@ int main()
   double a[MAX_SIZE][MAX_SIZE], b[MAX_SIZE], x[MAX_SIZE];
   double TOL;
 
-  while ( scanf("%d", &n) != EOF ) { /* ¶ÁÈ¡²ÃÅĞ²âÊÔÓÃÀı */
+  while ( scanf("%d", &n) != EOF ) { /* è¯»å–è£åˆ¤æµ‹è¯•ç”¨ä¾‹ */
     for ( i=0; i<n; i++ ) {
       for ( j=0; j<n; j++ )
         scanf("%lf", &a[i][j]);
@@ -150,7 +155,7 @@ int main()
     }
     scanf("%lf %d", &TOL, &MAXN);
 
-    /* Êä³öÑÅ¿É±ÈËã·¨µÄ½á¹û */
+    /* è¾“å‡ºé›…å¯æ¯”ç®—æ³•çš„ç»“æœ */
     printf("Result of Jacobi method:\n");
     for ( i=0; i<n; i++ )
       x[i] = 0.0;
@@ -172,7 +177,7 @@ int main()
         break;
     }
 
-    /* Êä³ö¸ßË¹-ÈûµÂ¶ûËã·¨µÄ½á¹û */
+    /* è¾“å‡ºé«˜æ–¯-å¡å¾·å°”ç®—æ³•çš„ç»“æœ */
     printf("Result of Gauss-Seidel method:\n");
     for ( i=0; i<n; i++ )
       x[i] = 0.0;
