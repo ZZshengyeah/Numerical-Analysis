@@ -38,7 +38,10 @@ void change(int n, double a[][MAX_SIZE], double b[])
         for(int j=i+1;j<n;j++)
         {
             if(fabs(a[j][i])>fabs(max))
+            {
+                max = a[j][i];
                 max_index = j;
+            }
         }
         if(max_index != 0)
             swap(i,max_index,n,a,b);
