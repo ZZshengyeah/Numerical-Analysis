@@ -34,11 +34,14 @@ void change(int n, double a[][MAX_SIZE], double b[])
     for(int i=0;i<n;i++)
     {
         double max = a[i][i];
+        int max_index = 0;
         for(int j=i+1;j<n;j++)
         {
             if(fabs(a[j][i])>fabs(max))
-                swap(i,j,n,a,b);
+                max_index = j;
         }
+        if(max_index != 0)
+            swap(i,max_index,n,a,b);
     }
 }
 int convergence(int n, double x[])
